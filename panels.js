@@ -5,7 +5,8 @@ function sign(x) { return x > 0 ? 1 : x < 0 ? -1 : 0; }
 
 var build_panels = function(unikid,basePath) {
 
-	var imagesFold = basePath + "/media/";
+	var imagesFold = basePath + "/media/images/";
+	var audioFold = basePath + "/media/audio/";
 
 	var DURSLIDE = 1700;
 
@@ -116,7 +117,7 @@ var build_panels = function(unikid,basePath) {
 	
 	function addImageBehind(i,line,pos) {
 		var path = imagesFold+line['file'];
-		var pathaudio = imagesFold+line['mp3']+'.mp3';
+		var pathaudio = audioFold+line['mp3']+'.mp3';
 		var ext = line['file'].split(".")[1];
 		console.log("------ Adding file: "+i+"|"+pos+"|"+ext+"|"+path);
 		
