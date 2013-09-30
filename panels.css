@@ -1,0 +1,97 @@
+/* ---------------------------------------- */
+/* FOR GIFS JS */
+
+html, body {
+	margin:0px;
+	padding:0px;
+	overflow:hidden;
+}
+.wrapper {
+	margin:0px;
+	padding:0px;
+	overflow:hidden;
+}
+.buttons {
+/*
+	position: absolute;
+	top:10;
+	left:10;
+*/
+}
+#buttons a {
+	position: absolute;
+	top:10px;
+	background: rgba(255,255,255,0.44);
+	z-index: 3000;
+	padding: 3px;
+	width:30px;
+	height:30px;
+	border-radius:4px;
+	-moz-border-radius:4px;
+}
+#buttons a:hover {
+	background: rgba(255,255,255,0.89);
+	cursor: pointer;
+}
+#buttons a img {
+	width: 100%;
+	vertical-align: middle;
+}
+#b_fullscreen {
+	left:10px;
+}
+#b_mute {
+	left:50px;
+}
+
+.mask {
+	position:absolute;
+	top:0;
+	background: black;
+	/*border: 2px solid red*/;
+}
+.bubble {
+	position:absolute;
+	padding:10px;
+	text-align: left;
+	/*background: rgba(0,0,0,0.51);*/
+	color:white;
+	font-family: "Avenir LT W01 85 Heavy","HelveticaNeue-Bold","Helvetica Neue Bold",Helvetica,Arial,sans-serif;
+	font-family: 'Avenir LT W01 55 Roman', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+	text-shadow: rgba(0,0,0,0.6) 0px 2px 5px;
+}
+.panel {
+	position:absolute;
+	top:0;
+	overflow:hidden;
+}
+.panel img {
+	position:absolute;
+	margin:0px;
+	padding:0px;
+}
+.video, video {
+	position:absolute;
+	margin:0px;
+	padding:0px;
+}
+
+
+/*
+.giffullscreen_agif div {
+	pointer-events:none;
+	position:absolute;
+	padding:2px;
+	border: transparent 2px solid;
+	border-radius: 5px;
+	background:black;
+	text-align:center;
+	color:white;
+	font-size:12px;
+}
+.giffullscreen_agif div:hover {
+	cursor: pointer;
+	border: red 2px solid;
+	background: grey;
+}
+*/
