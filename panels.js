@@ -96,7 +96,7 @@ var build_panels = function(unikid,basePath) {
 				centerPanel(d3.select("#pleft"),'left');
 				centerPanel(d3.select("#pright"),'right');
 			}
-		} catch(err) { console.log(" - ERROR - "+pos); }
+		} catch(err) { console.log(" - ERROR - "+pos);console.log(err); }
 	}
 	window.onresize = winResized;
 
@@ -323,7 +323,7 @@ var build_panels = function(unikid,basePath) {
 					setVolume('left',currentIndex.left,1-mx/W);
 					setVolume('right',currentIndex.right,mx/W);
 				}
-				winResized();
+				winResized('both');
 			});
 		document.onkeydown = function(e) {
 			e = e || window.event;
