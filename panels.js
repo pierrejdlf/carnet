@@ -7,7 +7,7 @@ var build_panels = function(unikid,basePath) {
 
 	var imagesFold = basePath + "/media/images/";
 	var audioFold = basePath + "/media/audio/";
-
+	
 	var DURSLIDE = 1700;
 
 	var currentIndex = {'left':0,'right':0};
@@ -243,7 +243,7 @@ var build_panels = function(unikid,basePath) {
 	
 	// function to move forward !
 	function moveForward(pos) {		
-		if(!killinglock[pos]) {
+		if(!killinglock[pos] && currentIndex['left']<lines[pos].length-1 ) {
 			killinglock[pos] = true;
 			console.log("Moving forward: "+pos+"|"+currentIndex[pos]);
 			
@@ -272,7 +272,7 @@ var build_panels = function(unikid,basePath) {
 			catch(err) {}
 			currentIndex[pos]+=1;
 			var wi = currentIndex[pos]+1;
-			addImageBehind(wi,lines[pos][wi],pos);
+			if(wi<lines[pos].length) addImageBehind(wi,lines[pos][wi],pos);
 			// fade out and kill audio
 			
 			//console.log(currentIndex);
