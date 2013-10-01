@@ -197,8 +197,8 @@ var build_panels = function(unikid,basePath) {
 						.style("top", function(d,i){ return bvals[1]+"px"; })
 						.style("font-size",function(d,i){ return ps+"em"; })
 						.style("z-index",1000-i)
-						.text("")
-						.each(function(d,i){ typeWrite(d3.select(this),bvals[2]); });
+						.text(bvals[2]);
+						//.each(function(d,i){ typeWrite(d3.select(this),bvals[2]); });
 				}
 			}
 			
