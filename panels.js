@@ -7,11 +7,10 @@ var build_panels = function(unikid,basePath) {
 
 	var imagesFold = basePath + "/media/images/";
 	var audioFold = basePath + "/media/audio/";
-	
 	var DURSLIDE = 1700;
-
+	var AUDIOCOEFF = 0.6;
+	var NLOAD = 4;
 	var currentIndex = {'left':0,'right':0};
-	var thebox = null;
 
 	var coordinates = [0, 0],
 		w = window,
@@ -26,6 +25,7 @@ var build_panels = function(unikid,basePath) {
 		var coco = l;
 		if(pos=='right') coco = 1-l;
 		var wratio = W*coco/H;
+		var cocoxW = coco*W;
 		
 		// disp W
 		var dW = W*coco;
@@ -34,6 +34,7 @@ var build_panels = function(unikid,basePath) {
 		//console.log("select:"+sel);
 		
 		var media = elem.select(sel);
+		var thediv = elem.select("div");
 		// media info
 		var ratio = 	media.attr("sr");
 		var height = 	media.attr("sh");
@@ -41,15 +42,15 @@ var build_panels = function(unikid,basePath) {
 		//console.log("wratio:"+wratio);
 		//if(typ=='video') media = elem.select(sel+" video");
 		
-		elem.style("width",coco*W);
+		elem.style("width",cocoxW);
 		elem.style("height",H);
 		if(pos=='right') elem.style("left",l*W+"px");
 		
-		elem.select("div").style("width",coco*W);
-		elem.select("div").style("height",H);
-		elem.select("div").style("opacity",0.7-coco);
+		thediv.style("width",cocoxW);
+		thediv.style("height",H);
+		thediv.style("opacity",0.7-coco);
 		//elem.select("div").style("box-shadow",30*coco+"px 0px 50px black");	
-		if(pos=='right') elem.select("div").style("left",0+"px");
+		if(pos=='right') thediv.style("left",0+"px");
 		
 		
 		// wanted width and dec based on available space
@@ -59,16 +60,13 @@ var build_panels = function(unikid,basePath) {
 		if(wratio<ratio) {
 			w = ratio*H;
 			if(pos=='right') {
-				decX = (coco*W-w)/2;
+				decX = (cocoxW-w)/2;
 			} else {
-				decX = (coco*W-w)/2;
+				decX = (cocoxW-w)/2;
 			}
-			//console.log("decX"+decX);
 		} else {
 			w = W*coco;
 			decY = (H-w/ratio)/2;
-			if(pos=='right') decX = (coco*W-w)/2;
-			//console.log("decY"+decY);
 		}
 		
 		// set sizes
@@ -149,18 +147,6 @@ var build_panels = function(unikid,basePath) {
 					.attr("type",'video/mp4');
 				document.getElementById(pos+"media"+i).volume = 0;
 				document.getElementById(pos+"media"+i).pause();
-/*
-				videojs("media"+i, {
-					"width":W+"px",
-					"height":H+"px",
-					"controls": false,
-					"autoplay": true,
-					"volume":0.2,
-					"preload": "auto",
-					"loop":true,
-					//"poster":"http://video-js.zencoder.com/oceans-clip.png",
-				});
-*/
 			}
 			// adding img/gif "/limage.jpg" + corresponding audio "/limage.superson.jpg"
 			if(typ=='img') {
@@ -243,7 +229,7 @@ var build_panels = function(unikid,basePath) {
 	
 	// function to move forward !
 	function moveForward(pos) {		
-		if(!killinglock[pos] && currentIndex['left']<lines[pos].length-1 ) {
+		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 ) {
 			killinglock[pos] = true;
 			console.log("Moving forward: "+pos+"|"+currentIndex[pos]);
 			
@@ -271,7 +257,7 @@ var build_panels = function(unikid,basePath) {
 			try { d3.select("#audio"+pos+'media'+currentIndex[pos]).remove(); }
 			catch(err) {}
 			currentIndex[pos]+=1;
-			var wi = currentIndex[pos]+1;
+			var wi = currentIndex[pos]+NLOAD-1;
 			if(wi<lines[pos].length) addImageBehind(wi,lines[pos][wi],pos);
 			// fade out and kill audio
 			
@@ -281,7 +267,7 @@ var build_panels = function(unikid,basePath) {
 	}
 		
 	function init(lines) {
-		thebox = d3.select("#"+unikid).style("text-align","center")
+		var thebox = d3.select("#"+unikid).style("text-align","center")
 			.append("div").attr("class","wrapper")
 				.style("width",W)
 				.style("height",H)
@@ -295,10 +281,10 @@ var build_panels = function(unikid,basePath) {
 
 	
 		// building 2 first layers
-		addImageBehind(0,lines.left[0],'left');
-		addImageBehind(0,lines.right[0],'right');
-		addImageBehind(1,lines.left[1],'left');
-		addImageBehind(1,lines.right[1],'right');	
+		for(var i=0;i<NLOAD;i++) {
+			addImageBehind(i,lines.left[i],'left');
+			addImageBehind(i,lines.right[i],'right');
+		}
 
 		/////////////////////////////////////////////// EVENTS
 		// or setting mouse clic to do it manually
@@ -320,8 +306,8 @@ var build_panels = function(unikid,basePath) {
 				//console.log(l);
 				// setting volumes
 				if(!mute) {
-					setVolume('left',currentIndex.left,1-mx/W);
-					setVolume('right',currentIndex.right,mx/W);
+					setVolume('left',currentIndex.left,(1-mx/W)*AUDIOCOEFF);
+					setVolume('right',currentIndex.right,(mx/W)*AUDIOCOEFF);
 				}
 				winResized('both');
 			});
