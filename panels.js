@@ -9,8 +9,9 @@ var build_panels = function(unikid,basePath) {
 	var audioFold = basePath + "/media/audio/";
 	var DURSLIDE = 1700;
 	var AUDIOCOEFF = 0.6;
-	var NLOAD = 3;
+	var NLOAD = 4;
 	var currentIndex = {'left':0,'right':0};
+	var initLoadedIndex = 0;
 
 	var coordinates = [0, 0],
 		w = window,
@@ -228,8 +229,8 @@ var build_panels = function(unikid,basePath) {
 	}
 	
 	// function to move forward !
-	function moveForward(pos) {		
-		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 ) {
+	function moveForward(pos) {
+		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 && initLoadedIndex==NLOAD ) {
 			killinglock[pos] = true;
 			console.log("Moving forward: "+pos+"|"+currentIndex[pos]);
 			
@@ -281,9 +282,13 @@ var build_panels = function(unikid,basePath) {
 
 	
 		// building 2 first layers
-		for(var i=0;i<NLOAD;i++) {
-			addImageBehind(i,lines.left[i],'left');
-			addImageBehind(i,lines.right[i],'right');
+		for(var n=0;n<NLOAD;n++) {
+			setTimeout(function(){
+				var k = initLoadedIndex; // 0,1,2,3,...
+				addImageBehind(k,lines.left[k],'left');
+				addImageBehind(k,lines.right[k],'right');
+				initLoadedIndex += 1;			
+			},n*1000);
 		}
 
 		/////////////////////////////////////////////// EVENTS
