@@ -10,8 +10,8 @@ var build_panels = function(unikid,basePath) {
 	var DURSLIDE = 1700;
 	var AUDIOCOEFF = 0.6;
 	var NLOAD = 4;
+	var nLoaded = 0;
 	var currentIndex = {'left':0,'right':0};
-	var initLoadedIndex = 0;
 
 	var coordinates = [0, 0],
 		w = window,
@@ -99,11 +99,14 @@ var build_panels = function(unikid,basePath) {
 	}
 	window.onresize = winResized;
 
-	function getImgSize(imgSrc,callb) {
-		var newImg = new Image();
-		newImg.onload = callb;
-		newImg.onerror = callb;
-		newImg.src = imgSrc;
+	function getImgSize(typ,imgSrc,callb) {
+		if(typ=='img') {
+			var newImg = new Image();
+			newImg.onload = callb;
+			newImg.onerror = callb;
+			newImg.src = imgSrc;
+		} else 
+			callb(null);
 	}
 
 	function typeWrite(elem,text) {
@@ -114,7 +117,7 @@ var build_panels = function(unikid,basePath) {
 		});
 	}
 	
-	function addImageBehind(i,line,pos) {
+	function addImageBehind(i,line,pos,finished) {
 		var path = imagesFold+line['file'];
 		var pathaudio = audioFold+line['mp3']+'.mp3';
 		var ext = line['file'].split(".")[1];
@@ -124,7 +127,7 @@ var build_panels = function(unikid,basePath) {
 		if(ext=='m4v') typ = 'video';
 		if(ext=='mp3') typ = 'audio';
 		
-		getImgSize(path,function(s){
+		getImgSize(typ,path,function(s){
 			var s = {'height':this.height,'width':this.width,'ratio':this.width/this.height};
 			//console.log("got ratio:"+s.ratio);	
 			var agif = d3.select("#p"+pos);
@@ -168,7 +171,6 @@ var build_panels = function(unikid,basePath) {
 				document.getElementById("audio"+pos+'media'+i).volume = 0;
 				document.getElementById("audio"+pos+'media'+i).pause();
 			}
-			winResized(pos);
 			
 			// building bubbles
 			if(line['bubbles']) {
@@ -204,6 +206,9 @@ var build_panels = function(unikid,basePath) {
 			
 			if(i==0) startMedia(pos,0);
 			//console.log("added: "+typ+" "+pos+'media'+i);
+
+			if(typeof(finished)==='undefined') console.log("(no callback)");
+			else finished();
 		});
 	}
 
@@ -230,7 +235,7 @@ var build_panels = function(unikid,basePath) {
 	
 	// function to move forward !
 	function moveForward(pos) {
-		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 && initLoadedIndex==NLOAD ) {
+		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 && nLoaded==NLOAD ) {
 			killinglock[pos] = true;
 			console.log("Moving forward: "+pos+"|"+currentIndex[pos]);
 			
@@ -259,14 +264,27 @@ var build_panels = function(unikid,basePath) {
 			catch(err) {}
 			currentIndex[pos]+=1;
 			var wi = currentIndex[pos]+NLOAD-1;
-			if(wi<lines[pos].length) addImageBehind(wi,lines[pos][wi],pos);
+			if(wi<lines[pos].length) addImageBehind(wi,lines[pos][wi],pos)
 			// fade out and kill audio
 			
 			//console.log(currentIndex);
 			//killinglock[pos] = false;
 		}
 	}
-		
+	
+	function addBothImagesBehind(k,callb) {
+		if(k<NLOAD) {
+			addImageBehind(k,lines.left[k],'left', function() {
+				addImageBehind(k,lines.right[k],'right', function(){
+					winResized('both');
+					nLoaded = k+1;
+					callb(k+1,callb);
+				});
+			});
+		} else 
+			console.log("Finished loading "+NLOAD+" images");
+	}
+
 	function init(lines) {
 		var thebox = d3.select("#"+unikid).style("text-align","center")
 			.append("div").attr("class","wrapper")
@@ -281,15 +299,8 @@ var build_panels = function(unikid,basePath) {
 			.append("div").attr("class","mask").attr("id","mright").style("z-index",1007);
 
 	
-		// building 2 first layers
-		for(var n=0;n<NLOAD;n++) {
-			setTimeout(function(){
-				var k = initLoadedIndex; // 0,1,2,3,...
-				addImageBehind(k,lines.left[k],'left');
-				addImageBehind(k,lines.right[k],'right');
-				initLoadedIndex += 1;			
-			},n*1000);
-		}
+		// building first layers
+		addBothImagesBehind(0,addBothImagesBehind);
 
 		/////////////////////////////////////////////// EVENTS
 		// or setting mouse clic to do it manually
