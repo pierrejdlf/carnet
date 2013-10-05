@@ -313,20 +313,22 @@ var build_panels = function(unikid,basePath) {
 				//else moveForward('right');
 			})
 			.on('mousemove', function(){
-				coordinates = d3.mouse(this);
-				var mx = coordinates[0];
-				var dec = sign(mx/W-0.5)*Math.pow(mx/W-0.5,2);
-				//var dec = mx/W-0.5;
-				l = Math.min(1,0.5-2.5*dec);
-				l = Math.max(l,0);
-				//l = 0.5-0.65*dec;
-				//console.log(l);
-				// setting volumes
-				if(!mute) {
-					setVolume('left',currentIndex.left,(1-mx/W)*AUDIOCOEFF);
-					setVolume('right',currentIndex.right,(mx/W)*AUDIOCOEFF);
+				if(nLoaded>0) {
+					coordinates = d3.mouse(this);
+					var mx = coordinates[0];
+					var dec = sign(mx/W-0.5)*Math.pow(mx/W-0.5,2);
+					//var dec = mx/W-0.5;
+					l = Math.min(1,0.5-2.5*dec);
+					l = Math.max(l,0);
+					//l = 0.5-0.65*dec;
+					//console.log(l);
+					// setting volumes
+					if(!mute) {
+						setVolume('left',currentIndex.left,(1-mx/W)*AUDIOCOEFF);
+						setVolume('right',currentIndex.right,(mx/W)*AUDIOCOEFF);
+					}
+					winResized('both');
 				}
-				winResized('both');
 			});
 		document.onkeydown = function(e) {
 			e = e || window.event;
