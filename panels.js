@@ -9,7 +9,7 @@ var build_panels = function(unikid,basePath) {
 	var audioFold = basePath + "/media/audio/";
 	var DURSLIDE = 1700;
 	var AUDIOCOEFF = 0.6;
-	var NLOAD = 4;
+	var NLOAD = 3;
 	var nLoaded = 0;
 	var currentIndex = {'left':0,'right':0};
 
