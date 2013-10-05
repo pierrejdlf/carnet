@@ -96,7 +96,7 @@ var build_panels = function(unikid,basePath) {
 				centerPanel(d3.select("#pleft"),'left');
 				centerPanel(d3.select("#pright"),'right');
 			}
-		} catch(err) { console.log(" - error resizing - : "+pos) }
+		} catch(err) { console.log(" - error resizing - : "+pos+" index: "+currentIndex.left+"|"+currentIndex.right) }
 	}
 	window.onresize = winResized;
 
@@ -270,7 +270,7 @@ var build_panels = function(unikid,basePath) {
 			currentIndex[pos]+=1;
 			winResized(pos);
 			var wi = currentIndex[pos]+NLOAD-1;
-			if(wi<lines[pos].length) addImageBehind(wi,lines[pos][wi],pos)
+			if(wi<lines[pos].length) addImageBehind(wi,lines[pos][wi],pos);
 			// fade out and kill audio
 			
 			console.log("__ currently looking index: "+currentIndex.left+"|"+currentIndex.right);
