@@ -279,6 +279,7 @@ var build_panels = function(unikid,basePath) {
 			addImageBehind(k,lines.left[k],'left', function() {
 				addImageBehind(k,lines.right[k],'right', function(){
 					winResized('both');
+					if(nLoaded==0) d3.select('#loading').remove();
 					nLoaded = k+1;
 					callb(k+1,callb);
 				});

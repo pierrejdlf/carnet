@@ -6,6 +6,24 @@ html, body {
 	padding:0px;
 	overflow:hidden;
 }
+
+#loading {
+	margin:0px;
+	padding:0px;	
+	width:100%;
+	height:100%;
+	position:absolute;
+	left:0;
+	right:0;
+	text-align: center;
+	line-height: 10em;
+	z-index: 4000;
+	background: black;
+}
+#loading img {
+	top:50%;
+	position:absolute;
+}
 .wrapper {
 	margin:0px;
 	padding:0px;
