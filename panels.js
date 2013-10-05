@@ -86,7 +86,7 @@ var build_panels = function(unikid,basePath) {
 		
 	}
 	function winResized(pos) {
-		//try {
+		try {
 			W = w.innerWidth || e.clientWidth || g.clientWidth;
 			H = w.innerHeight|| e.clientHeight|| g.clientHeight;
 			//console.log("size: "+W+"/"+H);
@@ -96,7 +96,7 @@ var build_panels = function(unikid,basePath) {
 				centerPanel(d3.select("#pleft"),'left');
 				centerPanel(d3.select("#pright"),'right');
 			}
-		//} catch(err) { console.log(" - ERROR - "+pos);console.log(err); }
+		} catch(err) { console.log(" - error resizing - : "+pos) }
 	}
 	window.onresize = winResized;
 
@@ -265,7 +265,7 @@ var build_panels = function(unikid,basePath) {
 			try { d3.select("#audio"+pos+'media'+currentIndex[pos]).remove(); }
 			catch(err) {}
 			currentIndex[pos]+=1;
-			winResized('both');
+			winResized(pos);
 			var wi = currentIndex[pos]+NLOAD-1;
 			if(wi<lines[pos].length) addImageBehind(wi,lines[pos][wi],pos)
 			// fade out and kill audio
