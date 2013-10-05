@@ -122,7 +122,7 @@ var build_panels = function(unikid,basePath) {
 		var path = imagesFold+line['file'];
 		var pathaudio = audioFold+line['mp3']+'.mp3';
 		var ext = line['file'].split(".")[1];
-		console.log("__ loading: "+i+"|"+pos+"|"+ext+"|"+line['file']);
+		console.log("__ loading: "+i+"|"+pos+"|"+line['file']);
 		
 		var typ = 'img';
 		if(ext=='m4v') typ = 'video';
@@ -240,7 +240,8 @@ var build_panels = function(unikid,basePath) {
 	
 	// function to move forward !
 	function moveForward(pos) {
-		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length && currentIndex[pos]<nLoaded ) {
+		var isOk = parseInt(nLoaded)==nLoaded;
+		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length && currentIndex[pos]<nLoaded && isOk ) {
 			killinglock[pos] = true;
 			console.log("__ moving forward: "+pos+"|"+currentIndex[pos]);
 			
