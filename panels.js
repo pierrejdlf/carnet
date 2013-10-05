@@ -8,7 +8,7 @@ var build_panels = function(unikid,basePath) {
 	var imagesFold = basePath + "/media/images/";
 	var audioFold = basePath + "/media/audio/";
 	var DURSLIDE = 1700;
-	var AUDIOCOEFF = 0.6;
+	var AUDIOCOEFF = 0.5;
 	var NLOAD = 3;
 	var nLoaded = 0;
 	var currentIndex = {'left':1,'right':1};
@@ -207,7 +207,7 @@ var build_panels = function(unikid,basePath) {
 				}
 			}
 			
-			if(i==0) startMedia(pos,0);
+			if(i==1) startMedia(pos,1);
 			//console.log("added: "+typ+" "+pos+'media'+i);
 
 			nLoaded += 0.5;
@@ -229,8 +229,8 @@ var build_panels = function(unikid,basePath) {
 	}	
 	function startMedia(pos,i) {
 		if(!mute) {
-			setVolume('left',i,0.5);
-			setVolume('right',i,0.5);
+			setVolume('left',i,0.3);
+			setVolume('right',i,0.3);
 		}
 		try {document.getElementById(pos+"media"+i).play();}
 		catch(err) {}
