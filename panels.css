@@ -80,9 +80,12 @@ html, body {
 	font-family: 'Bubbler One', sans-serif;
 }
 .font_1 {
+	font-family: 'Cabin Sketch', cursive;
+}
+.font_b {
 	font-family: 'Kite One', sans-serif;
 }
-.font_3 {
+.font_b {
 	font-family: 'Avenir LT W01 55 Roman', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 }
 .panel {

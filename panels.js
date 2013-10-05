@@ -211,7 +211,8 @@ var build_panels = function(unikid,basePath) {
 			//console.log("added: "+typ+" "+pos+'media'+i);
 
 			nLoaded += 0.5;
-			if(typeof(finished)==='undefined') console.log("(no callback) loaded: "+nLoaded);
+			console.log("__ currently loaded: "+nLoaded);
+			if(typeof(finished)==='undefined') console.log("(no callback)");
 			else finished();
 		});
 	}
@@ -239,7 +240,7 @@ var build_panels = function(unikid,basePath) {
 	
 	// function to move forward !
 	function moveForward(pos) {
-		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 && nLoaded>currentIndex[pos] ) {
+		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 && nLoaded>currentIndex[pos]+1 ) {
 			killinglock[pos] = true;
 			console.log("Moving forward: "+pos+"|"+currentIndex[pos]);
 			
@@ -272,7 +273,7 @@ var build_panels = function(unikid,basePath) {
 			if(wi<lines[pos].length) addImageBehind(wi,lines[pos][wi],pos)
 			// fade out and kill audio
 			
-			//console.log(currentIndex);
+			console.log("__ currently looking index: "+currentIndex.left+"|"+currentIndex.right);
 			//killinglock[pos] = false;
 		}
 	}
