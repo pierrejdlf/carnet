@@ -12,6 +12,7 @@ var build_panels = function(unikid,basePath) {
 	var NLOAD = 2;
 	var nLoaded = 0;
 	var currentIndex = {'left':1,'right':1};
+	var BLOCKUI = false;
 
 	var coordinates = [0, 0],
 		w = window,
@@ -223,7 +224,8 @@ var build_panels = function(unikid,basePath) {
 		});
 	}
 	function setLoadingEach(flag) {
-		console.log("__ set gifloading: "+flag);
+		BLOCKUI = flag;
+		console.log("__ UI LOCKED: "+flag);
 		d3.select("#loadingeach").style("opacity",flag ? 1:0);
 	}
 	function setVolume(pos,i,vol) {
@@ -323,8 +325,10 @@ var build_panels = function(unikid,basePath) {
 		// or setting mouse clic to do it manually
 		d3.select("#"+unikid+" .wrapper")
 			.on("click", function(d,i) {
-				moveForward('left');
-				moveForward('right');
+				if(!BLOCKUI) {
+					moveForward('left');
+					moveForward('right');
+				}
 				//if(coordinates[0]<l*W) moveForward('left');
 				//else moveForward('right');
 			})
@@ -347,10 +351,12 @@ var build_panels = function(unikid,basePath) {
 				}
 			});
 		document.onkeydown = function(e) {
-			e = e || window.event;
-			if (e.keyCode == '40') {
-				moveForward('left');
-				moveForward('right');
+			if(!BLOCKUI) {
+				e = e || window.event;
+				if (e.keyCode == '40') {
+					moveForward('left');
+					moveForward('right');
+				}
 			}
 		}
 		/////////////////////////////////////////////// BUTTONS
