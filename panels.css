@@ -37,7 +37,7 @@ html, body {
 */
 }
 
-#buttons a {
+#buttons a, #buttons #loadingeach {
 	position: absolute;
 	top:10px;
 	background: rgba(255,255,255,0.44);
@@ -56,11 +56,15 @@ html, body {
 	width: 100%;
 	vertical-align: middle;
 }
+
 #b_fullscreen {
 	left:10px;
 }
 #b_mute {
 	left:50px;
+}
+#buttons #loadingeach {
+	left:90px;
 }
 
 .mask {

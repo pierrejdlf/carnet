@@ -122,6 +122,9 @@ var build_panels = function(unikid,basePath) {
 		var path = imagesFold+line['file'];
 		var pathaudio = audioFold+line['mp3']+'.mp3';
 		var ext = line['file'].split(".")[1];
+		
+		if(pos=='left') setLoadingEach(true);
+
 		console.log("__ loading: "+i+"|"+pos+"|"+line['file']);
 		
 		var typ = 'img';
@@ -212,11 +215,17 @@ var build_panels = function(unikid,basePath) {
 
 			nLoaded += 0.5;
 			console.log("__ nLoaded: "+nLoaded);
+			
+			if(pos=='right') setLoadingEach(false);
+
 			if(typeof(finished)==='undefined') console.log("(no callback)");
 			else finished();
 		});
 	}
-
+	function setLoadingEach(flag) {
+		console.log("__ set gifloading: "+flag);
+		d3.select("#loadingeach").style("opacity",flag ? 1:0);
+	}
 	function setVolume(pos,i,vol) {
 		// either video or audio ?
 		var selv = pos+"media"+i;
