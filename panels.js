@@ -208,7 +208,8 @@ var build_panels = function(unikid,basePath) {
 			if(i==0) startMedia(pos,0);
 			//console.log("added: "+typ+" "+pos+'media'+i);
 
-			if(typeof(finished)==='undefined') console.log("(no callback)");
+			nLoaded += 0.5;
+			if(typeof(finished)==='undefined') console.log("(no callback) loaded: "+nLoaded);
 			else finished();
 		});
 	}
@@ -236,7 +237,7 @@ var build_panels = function(unikid,basePath) {
 	
 	// function to move forward !
 	function moveForward(pos) {
-		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 && nLoaded==NLOAD ) {
+		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 && nLoaded>currentIndex[pos] ) {
 			killinglock[pos] = true;
 			console.log("Moving forward: "+pos+"|"+currentIndex[pos]);
 			
@@ -279,8 +280,7 @@ var build_panels = function(unikid,basePath) {
 			addImageBehind(k,lines.left[k],'left', function() {
 				addImageBehind(k,lines.right[k],'right', function(){
 					winResized('both');
-					if(nLoaded==0) d3.select('#loading').remove();
-					nLoaded = k+1;
+					if(nLoaded==1) d3.select('#loading').remove();
 					callb(k+1,callb);
 				});
 			});
