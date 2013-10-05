@@ -181,6 +181,7 @@ var build_panels = function(unikid,basePath) {
 				// ? random  pour pos (nL,i);
 				// ? random size pour ligne
 				var nB = bubbles.length;
+				var indexFont = 0;
 				for(e in bubbles) {
 					//console.log("In-BUBBLES: "+typ+" "+pos+'media'+i);
 					var bvals = null;
@@ -193,8 +194,9 @@ var build_panels = function(unikid,basePath) {
 					}
 					var ps = 0.85+Math.random()*1.8;
 					var tw = Math.min(30+bvals[2].length*8*ps,W*0.7);
+					indexFont = pos=='left'? 0 : 1;
 					agif.append("div")
-						.attr("class","bubble "+"bubble"+pos+i)
+						.attr("class","bubble "+"bubble"+pos+i+" font_"+indexFont)
 						.style("width", function(d,i){ return tw+"px"; })
 						.style("left", function(d,i){ return Math.min(px,W-tw)+"px"; })
 						.style("top", function(d,i){ return bvals[1]+"px"; })

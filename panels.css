@@ -73,11 +73,17 @@ html, body {
 	position:absolute;
 	padding:10px;
 	text-align: left;
-	/*background: rgba(0,0,0,0.51);*/
 	color:white;
-	font-family: "Avenir LT W01 85 Heavy","HelveticaNeue-Bold","Helvetica Neue Bold",Helvetica,Arial,sans-serif;
+	text-shadow: rgba(0,0,0,0.6) 1px 3px 12px;
+}
+.font_0 {
+	font-family: 'Bubbler One', sans-serif;
+}
+.font_1 {
+	font-family: 'Kite One', sans-serif;
+}
+.font_3 {
 	font-family: 'Avenir LT W01 55 Roman', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-	text-shadow: rgba(0,0,0,0.6) 0px 2px 5px;
 }
 .panel {
 	position:absolute;
