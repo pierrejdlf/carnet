@@ -11,7 +11,7 @@ var build_panels = function(unikid,basePath) {
 	var AUDIOCOEFF = 0.6;
 	var NLOAD = 3;
 	var nLoaded = 0;
-	var currentIndex = {'left':0,'right':0};
+	var currentIndex = {'left':1,'right':1};
 
 	var coordinates = [0, 0],
 		w = window,
@@ -122,7 +122,7 @@ var build_panels = function(unikid,basePath) {
 		var path = imagesFold+line['file'];
 		var pathaudio = audioFold+line['mp3']+'.mp3';
 		var ext = line['file'].split(".")[1];
-		console.log("------ Adding file: "+i+"|"+pos+"|"+ext+"|"+path);
+		console.log("__ loading: "+i+"|"+pos+"|"+ext+"|"+line['file']);
 		
 		var typ = 'img';
 		if(ext=='m4v') typ = 'video';
@@ -211,7 +211,7 @@ var build_panels = function(unikid,basePath) {
 			//console.log("added: "+typ+" "+pos+'media'+i);
 
 			nLoaded += 0.5;
-			console.log("__ currently loaded: "+nLoaded);
+			console.log("__ nLoaded: "+nLoaded);
 			if(typeof(finished)==='undefined') console.log("(no callback)");
 			else finished();
 		});
@@ -240,9 +240,9 @@ var build_panels = function(unikid,basePath) {
 	
 	// function to move forward !
 	function moveForward(pos) {
-		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 && nLoaded>currentIndex[pos]+1.5 ) {
+		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length && currentIndex[pos]<nLoaded ) {
 			killinglock[pos] = true;
-			console.log("Moving forward: "+pos+"|"+currentIndex[pos]);
+			console.log("__ moving forward: "+pos+"|"+currentIndex[pos]);
 			
 			startMedia(pos,currentIndex[pos]+1);
 			
@@ -270,7 +270,8 @@ var build_panels = function(unikid,basePath) {
 			currentIndex[pos]+=1;
 			winResized(pos);
 			var wi = currentIndex[pos]+NLOAD-1;
-			if(wi<lines[pos].length) addImageBehind(wi,lines[pos][wi],pos);
+			if(wi<lines[pos].length+1) addImageBehind(wi,lines[pos][wi-1],pos);
+			else console.log("no more image to add behind");
 			// fade out and kill audio
 			
 			console.log("__ currently looking index: "+currentIndex.left+"|"+currentIndex.right);
@@ -279,9 +280,9 @@ var build_panels = function(unikid,basePath) {
 	}
 	
 	function addBothImagesBehind(k,callb) {
-		if(k<NLOAD) {
-			addImageBehind(k,lines.left[k],'left', function() {
-				addImageBehind(k,lines.right[k],'right', function(){
+		if(k<NLOAD+1) {
+			addImageBehind(k,lines.left[k-1],'left', function() {
+				addImageBehind(k,lines.right[k-1],'right', function(){
 					winResized('both');
 					if(nLoaded==1) d3.select('#loading').remove();
 					callb(k+1,callb);
@@ -306,7 +307,7 @@ var build_panels = function(unikid,basePath) {
 
 	
 		// building first layers
-		addBothImagesBehind(0,addBothImagesBehind);
+		addBothImagesBehind(1,addBothImagesBehind);
 
 		/////////////////////////////////////////////// EVENTS
 		// or setting mouse clic to do it manually
