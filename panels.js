@@ -240,7 +240,7 @@ var build_panels = function(unikid,basePath) {
 	
 	// function to move forward !
 	function moveForward(pos) {
-		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 && nLoaded>currentIndex[pos]+1 ) {
+		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length-1 && nLoaded>currentIndex[pos]+1.5 ) {
 			killinglock[pos] = true;
 			console.log("Moving forward: "+pos+"|"+currentIndex[pos]);
 			
