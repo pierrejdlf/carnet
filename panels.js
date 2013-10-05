@@ -23,6 +23,7 @@ var build_panels = function(unikid,basePath) {
 		l = 0.5; // central line
 	
 	function centerPanel(elem,pos) {
+		console.log("resizing: "+pos);
 		var coco = l;
 		if(pos=='right') coco = 1-l;
 		var wratio = W*coco/H;
@@ -85,7 +86,7 @@ var build_panels = function(unikid,basePath) {
 		
 	}
 	function winResized(pos) {
-		try {
+		//try {
 			W = w.innerWidth || e.clientWidth || g.clientWidth;
 			H = w.innerHeight|| e.clientHeight|| g.clientHeight;
 			//console.log("size: "+W+"/"+H);
@@ -95,7 +96,7 @@ var build_panels = function(unikid,basePath) {
 				centerPanel(d3.select("#pleft"),'left');
 				centerPanel(d3.select("#pright"),'right');
 			}
-		} catch(err) { console.log(" - ERROR - "+pos);console.log(err); }
+		//} catch(err) { console.log(" - ERROR - "+pos);console.log(err); }
 	}
 	window.onresize = winResized;
 
