@@ -23,7 +23,7 @@ var build_panels = function(unikid,basePath) {
 		l = 0.5; // central line
 	
 	function centerPanel(elem,pos) {
-		console.log("resizing: "+pos);
+		//console.log("resizing: "+pos);
 		var coco = l;
 		if(pos=='right') coco = 1-l;
 		var wratio = W*coco/H;
@@ -264,6 +264,7 @@ var build_panels = function(unikid,basePath) {
 			try { d3.select("#audio"+pos+'media'+currentIndex[pos]).remove(); }
 			catch(err) {}
 			currentIndex[pos]+=1;
+			winResized('both');
 			var wi = currentIndex[pos]+NLOAD-1;
 			if(wi<lines[pos].length) addImageBehind(wi,lines[pos][wi],pos)
 			// fade out and kill audio
