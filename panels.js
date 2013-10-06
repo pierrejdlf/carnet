@@ -238,8 +238,8 @@ var build_panels = function(unikid,basePath) {
 	}	
 	function startMedia(pos,i) {
 		if(!mute) {
-			setVolume('left',i,0.4);
-			setVolume('right',i,0.4);
+			setVolume('left',i,0.45);
+			setVolume('right',i,0.45);
 		}
 		try {document.getElementById(pos+"media"+i).play();}
 		catch(err) {}
