@@ -37,7 +37,7 @@ html, body {
 */
 }
 
-#buttons a, #buttons #loadingeach {
+#buttons a, #buttons #uiblocked {
 	position: absolute;
 	top:10px;
 	background: rgba(255,255,255,0.44);
@@ -63,7 +63,8 @@ html, body {
 #b_mute {
 	left:50px;
 }
-#buttons #loadingeach {
+#buttons #uiblocked {
+	width:auto;
 	left:90px;
 }
 
@@ -78,20 +79,21 @@ html, body {
 	padding:10px;
 	text-align: left;
 	color:white;
-	text-shadow: rgba(0,0,0,0.6) 1px 3px 12px;
+	text-shadow: rgba(0,0,0,0.5) 1px 2px 13px;
 }
-.font_0 {
+.font_left {
 	font-family: 'Bubbler One', sans-serif;
+	letter-spacing; 1px;
 }
-.font_1 {
+.font_rigth {
 	font-family: 'Cabin Sketch', cursive;
 }
-.font_b {
+/*.font_b {
 	font-family: 'Kite One', sans-serif;
 }
 .font_b {
 	font-family: 'Avenir LT W01 55 Roman', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-}
+}*/
 .panel {
 	position:absolute;
 	top:0;

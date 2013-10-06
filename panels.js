@@ -8,7 +8,7 @@ var build_panels = function(unikid,basePath) {
 	var imagesFold = basePath + "/media/images/";
 	var audioFold = basePath + "/media/audio/";
 	var DURSLIDE = 1700;
-	var AUDIOCOEFF = 0.5;
+	var AUDIOCOEFF = 0.7;
 	var NLOAD = 2;
 	var nLoaded = 0;
 	var currentIndex = {'left':1,'right':1};
@@ -124,7 +124,7 @@ var build_panels = function(unikid,basePath) {
 		var pathaudio = audioFold+line['mp3']+'.mp3';
 		var ext = line['file'].split(".")[1];
 		
-		if(pos=='left') setLoadingEach(true);
+		if(pos=='left') blockUI(true);
 
 		console.log("__ loading: "+i+"|"+pos+"|"+line['file']);
 		
@@ -185,7 +185,6 @@ var build_panels = function(unikid,basePath) {
 				// ? random  pour pos (nL,i);
 				// ? random size pour ligne
 				var nB = bubbles.length;
-				var indexFont = 0;
 				for(e in bubbles) {
 					//console.log("In-BUBBLES: "+typ+" "+pos+'media'+i);
 					var bvals = null;
@@ -198,9 +197,8 @@ var build_panels = function(unikid,basePath) {
 					}
 					var ps = 0.85+Math.random()*1.8;
 					var tw = Math.min(30+bvals[2].length*8*ps,W*0.7);
-					indexFont = pos=='left'? 0 : 1;
 					agif.append("div")
-						.attr("class","bubble "+"bubble"+pos+i+" font_"+indexFont)
+						.attr("class","bubble "+"bubble"+pos+i+" font_"+pos)
 						.style("width", function(d,i){ return tw+"px"; })
 						.style("left", function(d,i){ return Math.min(px,W-tw)+"px"; })
 						.style("top", function(d,i){ return bvals[1]+"px"; })
@@ -217,16 +215,16 @@ var build_panels = function(unikid,basePath) {
 			nLoaded += 0.5;
 			console.log("__ nLoaded: "+nLoaded);
 			
-			if(pos=='right') setLoadingEach(false);
+			if(pos=='right') blockUI(false);
 
-			if(typeof(finished)==='undefined') console.log("(no callback)");
+			if(typeof(finished)==='undefined') console.log("__ image added behind without callback");
 			else finished();
 		});
 	}
-	function setLoadingEach(flag) {
+	function blockUI(flag) {
 		BLOCKUI = flag;
-		console.log("__ UI LOCKED: "+flag);
-		d3.select("#loadingeach").style("opacity",flag ? 1:0);
+		console.log("_________ UI LOCKED: "+flag);
+		d3.select("#uiblocked").style("opacity",flag?1:0);
 	}
 	function setVolume(pos,i,vol) {
 		// either video or audio ?
@@ -240,8 +238,8 @@ var build_panels = function(unikid,basePath) {
 	}	
 	function startMedia(pos,i) {
 		if(!mute) {
-			setVolume('left',i,0.3);
-			setVolume('right',i,0.3);
+			setVolume('left',i,0.4);
+			setVolume('right',i,0.4);
 		}
 		try {document.getElementById(pos+"media"+i).play();}
 		catch(err) {}
@@ -251,8 +249,12 @@ var build_panels = function(unikid,basePath) {
 	
 	// function to move forward !
 	function moveForward(pos) {
-		var isOk = parseInt(nLoaded)==nLoaded;
-		if(!killinglock[pos] && currentIndex[pos]<lines[pos].length && currentIndex[pos]<nLoaded && isOk ) {
+		var loadedPair 		= parseInt(nLoaded)==nLoaded;
+		var notEnd 			= currentIndex[pos]<lines[pos].length;
+		var alreadyLoaded 	= currentIndex[pos]<nLoaded;
+		var isMoving 		= killinglock[pos];
+		console.log(".. will move ? "+!isMoving+"|"+notEnd+"|"+alreadyLoaded+"|"+loadedPair);
+		if(!isMoving && notEnd && alreadyLoaded) {
 			killinglock[pos] = true;
 			console.log("__ moving forward: "+pos+"|"+currentIndex[pos]);
 			
@@ -387,7 +389,7 @@ var build_panels = function(unikid,basePath) {
 	
 	/////////////////////////////////////////////// INIT
 	window.onload = function() {
-		console.log("Loading data");
+		console.log("Loading data 1.2");
 		lines = {};
 		d3.tsv(basePath+"/media_left.tsv",function(d) {
 			lines.left = d;
