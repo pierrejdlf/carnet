@@ -7,9 +7,9 @@ var build_panels = function(unikid,basePath) {
 
 	var imagesFold = basePath + "/media/images/";
 	var audioFold = basePath + "/media/audio/";
-	var DURSLIDE = 800;
+	var DURSLIDE = 1200;
 	var AUDIOCOEFF = 0.7;
-	var NLOAD = 2;
+	var NLOAD = 3;
 	var nLoaded = 0;
 	var currentIndex = {'left':1,'right':1};
 	var BLOCKUI = false;
