@@ -7,7 +7,7 @@ var build_panels = function(unikid,basePath) {
 
 	var imagesFold = basePath + "/media/images/";
 	var audioFold = basePath + "/media/audio/";
-	var DURSLIDE = 1700;
+	var DURSLIDE = 800;
 	var AUDIOCOEFF = 0.7;
 	var NLOAD = 2;
 	var nLoaded = 0;
@@ -51,7 +51,10 @@ var build_panels = function(unikid,basePath) {
 		
 		thediv.style("width",cocoxW);
 		thediv.style("height",H);
-		thediv.style("opacity",0.7-coco);
+
+		var bcolv = 0.7-0.9*coco*coco;
+		var bcol = "rgba(0,0,0,"+bcolv+")";
+		thediv.style("background-color",bcol);
 		//elem.select("div").style("box-shadow",30*coco+"px 0px 50px black");	
 		if(pos=='right') thediv.style("left",0+"px");
 		
